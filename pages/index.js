@@ -24,7 +24,7 @@ function Index() {
   // }
 
   return (
-    <div className="p-5">
+    <div className="pt-5 p-0 p-md-5">
       <h3 className="text-center fs-1 text-dark fw-bold py-4">
         BASIC CALCULATOR
       </h3>
