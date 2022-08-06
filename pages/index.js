@@ -1,10 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Index() {
   const [result, setResult] = useState("");
+  const [inputedNumber, setInputedNumber] = useState();
+  const operator = ["*", "-", "+", "/"];
 
-  function TriggerValue(event) {
-    setResult(result + event.target.value);
+  async function TriggerValue(event) {
+    let lastNumber = result.slice(-1);
+    console.log(lastNumber);
+    //"*+-/".includes(lastNumber) && "*+-/".includes(event.target.value
+    try {
+      if (
+        lastNumber ===
+          operator.find((element) => element === event.target.value) &&
+        event.target.value ===
+          operator.find((element) => element === event.target.value)
+      ) {
+        console.log("sheett");
+        return;
+      } else if (
+        "*+-/".includes(lastNumber) &&
+        "*+-/".includes(event.target.value)
+      ) {
+        setResult(result.replace(lastNumber, event.target.value));
+      } else {
+        setResult(result.concat(event.target.value));
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   }
 
   function DeleteLastValue() {
@@ -14,6 +38,39 @@ function Index() {
       setResult("Error");
     }
   }
+
+  console.log(result);
+
+  // if (result.slice(-1) == "*" && inputedNumber == lastInput) {
+  //   const resulta = result.slice(-1);
+  //   setResult(resulta + inputedNumber);
+  // }
+  // console.log(result);
+
+  // if (
+  //   /[+-\/*]/.test(insertedValue && insertedValue.endsWith(operators)) &&
+  //   /[+-\/*]$/.test(result.endsWith(operators))
+  // ) {
+  //   setResult(result.replace(result[result.length - 1]));
+  // }
+  // const endsWith = result.endsWith(operators1);
+
+  // console.log(endsWith);
+  // console.log(inputedResult == operators1);
+  // if (endsWith && inputedResult === operators1) {
+  //   try {
+  //     setResult(result.replace(result.slice(-1), inputedResult));
+  //   } catch (error) {
+  //     console.log("error");
+  //   }
+  // }
+  // function TriggerValue(event) {
+  //   const inputedValue = result + event.target.value;
+  //   const endsWith = result.endsWith(operators);
+  //   if (endsWith && inputedValue === operators) {
+  //     setResult(result.resplace(endsWith, inputedValue));
+  //   }
+  // }
 
   // function DeleteAllValue() {
   //   try {
@@ -184,7 +241,7 @@ function Index() {
                   value="="
                   onClick={() => {
                     try {
-                      setResult(eval(result));
+                      setResult(eval(result).toString());
                     } catch {
                       setResult("Error");
                     }
